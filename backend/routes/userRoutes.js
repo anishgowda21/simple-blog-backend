@@ -2,13 +2,13 @@ import express from "express";
 import { authUser, deleteUserProfile, getUserProfile, registerUser, updateUserProfile } from "../controller/userController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.post("/", registerUser);
-router.post("/auth", authUser);
-router.route("/profile")
+userRouter.post("/", registerUser);
+userRouter.post("/auth", authUser);
+userRouter.route("/profile")
     .get(protect, getUserProfile)
     .patch(protect, updateUserProfile)
     .delete(protect, deleteUserProfile);
 
-export default router;
+export default userRouter;

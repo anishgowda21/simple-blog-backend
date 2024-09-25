@@ -15,7 +15,6 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const existingUser = await getUserByEmail(email);
-    console.log(existingUser);
 
 
     if (existingUser) {
@@ -72,6 +71,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
     return res.status(200).json(user);
 });
 
+
+//@desc Update user profile
+//route PATCH /api/users/profile
+//@access Private
 const updateUserProfile = asyncHandler(async (req, res) => {
     const updateUserObj = { id: req.user.id };
 
@@ -88,6 +91,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     });
 });
 
+//@desc Delete user profile
+//route DELETE /api/users/profile
+//@access Private
 const deleteUserProfile = asyncHandler(async (req, res) => {
     const userId = req.user.id;
     await deleteUser(userId);
