@@ -11,6 +11,15 @@ export class CustomError extends Error {
 export const handleSupabaseError = (error, customMessage = "Database operation failed") => {
     if (error) {
         console.error(customMessage, error);
+        if (error.details && (
+            error.details.includes("not present") ||
+            error.details.includes("not found") ||
+            error.details.toLowerCase().includes("does not exist")
+        )) {
+            throw new CustomError("Resource not found", 404, error);
+        }
+
+
         throw new CustomError(customMessage, 500, error);
     }
 };

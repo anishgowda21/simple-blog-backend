@@ -6,6 +6,7 @@ import express from "express";
 import { connectSupabase } from "./config/db.js";
 import { errorHandler } from './middlewares/errorMiddleware.js';
 import userRoutes from './routes/userRoutes.js'
+import blogRoutes from './routes/blogRoutes.js'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,6 +15,7 @@ connectSupabase();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/user", userRoutes);
+app.use("/api/blog", blogRoutes);
 
 app.get("/", (req, res) => res.send("Server is Ready!!"));
 

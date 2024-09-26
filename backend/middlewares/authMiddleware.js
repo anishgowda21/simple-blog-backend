@@ -31,3 +31,25 @@ export const protect = asyncHandler(async (req, res, next) => {
     req.user = user;
     next();
 });
+
+export const protectOptional = asyncHandler(async (req, res, next) => {
+    const authHeader = req.headers.authorization || req.headers.Authorization;
+
+    if (authHeader) {
+        const token = authHeader.split(' ')[1];
+        if (token) {
+            try {
+                const { userId } = verifyToken(token);
+                const user = await getUserById(userId);
+
+                if (user) {
+                    req.user = user;
+                }
+            } catch (error) {
+                // Optional protection, token verification failed, continue without setting user
+                console.debug('Token verification failed:', error.message);
+            }
+        }
+    }
+    next();
+});
