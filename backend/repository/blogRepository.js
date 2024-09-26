@@ -13,7 +13,7 @@ const createBlog = async (title, content, userId) => {
 
 const getAllBlogs = async () => {
     const { data, error } = await supabase.from('blog')
-        .select('id,title,content,created_at,updated_at,user:user_id(name)')
+        .select('id,title,content,created_at,updated_at,user:user_id(id,name)')
         .eq('published', false).order('updated_at', { ascending: false });
 
     handleSupabaseError(error, "Failed to fetch the blogs");
@@ -23,7 +23,7 @@ const getAllBlogs = async () => {
 
 const getDashboardBlogs = async (userId) => {
     const { data, error } = await supabase.from('blog')
-        .select('id,title,content,created_at,updated_at,user_id,published')
+        .select('id,title,content,created_at,updated_at,user:user_id(id,name),published')
         .eq('user_id', userId).order('updated_at', { ascending: false });
 
     handleSupabaseError(error, 'Error getting dashboard blogs');
