@@ -1,7 +1,8 @@
 import { useGetBlogsQuery } from "../features/blog/blogApiSlice"
 import BlogCard from "./BlogCard";
+import { Row, Col } from "react-bootstrap";
 
-const BlogList = () => {
+const BlogList = ({ searchTerm, currentPage }) => {
     const { data: blogs, isLoading, isError, error } = useGetBlogsQuery();
 
     if (isLoading) return <div>Loading Blogs.....</div>
